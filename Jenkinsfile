@@ -17,7 +17,7 @@ pipeline {
                     userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
                     ])
 
-                stash includes: 'terraform-infrastructure', name: 'terraform-infrastructure/*'
+                stash includes: "terraform-infrastructure/*", name: "terraform-infrastructure"
                 }
         }
         stage('Create TF Remote State') {
