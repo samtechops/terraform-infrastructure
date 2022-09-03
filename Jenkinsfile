@@ -1,11 +1,12 @@
 node('jenkins-slave') {
     
-     stage('test pipeline') {
+     stage('create tf remote state') {
         sh(script: """
-            echo "hello"
-            terraform --version
-            aws --version
-           
+            echo "Creating S3 terraform remte state Bucket"
+            git clone https://github.com/samtechops/terraform-infrastructure.git
+            cd ./terraform-infrastructure
+            chmod +x ./scripts/create_state_bucket.sh
+            ./scripts/create_state_bucket.sh
         """)
     }
 }
