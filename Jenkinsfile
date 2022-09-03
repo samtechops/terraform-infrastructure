@@ -9,15 +9,12 @@ pipeline {
     stages {
         // your pipeline code here
         stage('Checkout') {
-            steps {
-                withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') {
-                    echo "Creating S3 terraform remte state Bucket"
-                    // sh "git clone https://github.com/samtechops/terraform-infrastructure.git"
-                    sh "cd ./terraform-infrastructure"
-                    sh "chmod +x ./scripts/create_state_bucket.sh"
-                    sh "./scripts/create_state_bucket.sh"
-                }
-            }
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: 'origin/main']],
+                extensions: scm.extensions,
+                userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
+                ])
         }
         stage('Create TF Remote State') {
             steps {
@@ -34,8 +31,8 @@ pipeline {
                 withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') {
                     echo "Creating S3 terraform remte state Bucket"
                     sh "cd ./terraform-infrastructure"
-                    sh "chmod +x ./scripts/create_state_bucket.sh"
-                    sh "./scripts/create_state_bucket.sh"
+                    sh "chmod +x ./scripts/create_dynamodb_terraform_lock.sh"
+                    sh "./scripts/create_dynamodb_terraform_lock.sh"
                 }
             }
         }
