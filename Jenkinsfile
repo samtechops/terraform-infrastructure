@@ -57,7 +57,6 @@ pipeline {
             steps {
                 withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') {
                     echo "Creating S3 terraform remte state Bucket"
-                    sh "aws s3 ls"
                     sh "git clone https://github.com/samtechops/terraform-infrastructure.git"
                     sh "cd ./terraform-infrastructure"
                     sh "chmod +x ./scripts/create_state_bucket.sh"
