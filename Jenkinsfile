@@ -47,15 +47,15 @@ pipeline {
     agent { 
         node { label 'jenkins-slave' } }
 
-    environment {
-        AWS_DEFAULT_REGION = 'eu-west-1'
-    }
+    // environment {
+    //     AWS_DEFAULT_REGION = 'eu-west-1'
+    // }
 
     stages {
         // your pipeline code here
-        stage('Description') {
+        stage('Create TF Remote State') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'sam-jenkins-aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                withAWS(credentials: 'sam-jenkins-demo-credentials', region: 'eu-west-1') {
                     echo "Creating S3 terraform remte state Bucket"
                     git url: 'https://github.com/samtechops/terraform-infrastructure.git'
                     sh "cd ./terraform-infrastructure"
