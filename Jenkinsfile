@@ -55,7 +55,7 @@ pipeline {
         // your pipeline code here
         stage('Create TF Remote State') {
             steps {
-                withAWS(credentials: 'sam-jenkins-demo-credentials', region: 'eu-west-1') {
+                withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') {
                     echo "Creating S3 terraform remte state Bucket"
                     git url: 'https://github.com/samtechops/terraform-infrastructure.git'
                     sh "cd ./terraform-infrastructure"
