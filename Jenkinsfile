@@ -10,13 +10,13 @@ pipeline {
         // your pipeline code here
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'origin/main']],
-                    extensions: scm.extensions,
-                    userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
-                    ])
-
+                // checkout([
+                //     $class: 'GitSCM',
+                //     branches: [[name: 'origin/main']],
+                //     extensions: scm.extensions,
+                //     userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
+                //     ])
+                sh "git clone https://github.com/samtechops/terraform-infrastructure.git"
                 stash includes: "terraform-infrastructure/*", name: "terraform-infrastructure"
                 }
         }
