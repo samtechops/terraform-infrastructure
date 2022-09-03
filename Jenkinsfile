@@ -9,12 +9,14 @@ pipeline {
     stages {
         // your pipeline code here
         stage('Checkout') {
-            checkout([
-                $class: 'GitSCM',
-                branches: [[name: 'origin/main']],
-                extensions: scm.extensions,
-                userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
-                ])
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'origin/main']],
+                    extensions: scm.extensions,
+                    userRemoteConfigs: [[url: 'https://github.com/samtechops/terraform-infrastructure.git']]
+                    ])
+                }
         }
         stage('Create TF Remote State') {
             steps {
