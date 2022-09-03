@@ -55,14 +55,7 @@ pipeline {
         // your pipeline code here
         stage('Description') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-cloud-deployment-pipeline', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-                    script {
-                        def version_display;
-                        if (params.REFRESH_JENKINSFILE == true) {
-                            currentBuild.description = "Refreshing Jenkinsfile"
-                        }
-                        PARENT_JOB = "Triggered by ${currentBuild.projectName} #${currentBuild.number}:"
-                    }
+                withCredentials([usernamePassword(credentialsId: 'sam-jenkins-aws-creds', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     echo "Creating S3 terraform remte state Bucket"
                     git url: 'https://github.com/samtechops/terraform-infrastructure.git'
                     sh "cd ./terraform-infrastructure"
