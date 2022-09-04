@@ -1,7 +1,7 @@
 resource "aws_security_group" "ec2" {
   name        = "${local.component}-ec2-sg"
   description = "Security group for the ${local.component} ec2"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = data.terraform_remote_state.base.outputs.vpc_id
 
 }
 
@@ -30,7 +30,7 @@ resource "aws_security_group_rule" "egress" {
 resource "aws_security_group" "alb_sg" {
   name        = "${local.component}-alb-sg"
   description = "Security group for the ${local.component} alb"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = data.terraform_remote_state.base.outputs.vpc_id
 
 }
 

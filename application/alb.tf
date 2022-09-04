@@ -26,7 +26,7 @@ resource "aws_lb_target_group" "alb_80" {
   name                 = "${local.component}-80"
   port                 = 80
   protocol             = "TCP"
-  vpc_id               = aws_vpc.main.id
+  vpc_id               = data.terraform_remote_state.base.outputs.vpc_id
 }
 
 resource "aws_lb_listener" "alb_8080" {
