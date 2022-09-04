@@ -5,7 +5,7 @@ resource "aws_lb" "alb" {
   internal           = false
   enable_cross_zone_load_balancing = false
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets             = [data.terraform_remote_state.base.outputs.public_subnet_id]
+  subnets             = [data.terraform_remote_state.base.outputs.public_subnet_id, data.terraform_remote_state.base.outputs.public_subnet_id_2]
   tags = merge(
      {
        Name = "${local.component}-alb"
