@@ -60,12 +60,26 @@ pipeline {
                 echo "Terraform Plan"
                 
                 dir('base') {
-                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\""
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
                     sh "terraform plan -no-color"
                 }
             }
         }
-
+        stage('TF Apply') {
+            when {
+                expression { 
+                   return params.TF_ACTION == 'APPLY'
+                }
+            }
+            steps {
+                echo "Terraform Apply"
+                
+                dir('base') {
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                    sh "terraform apply -auto-approve -no-color"
+                }
+            }
+        }
         
     }
 
