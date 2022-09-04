@@ -6,8 +6,7 @@ pipeline {
         choice(
             name: 'TF_ACTION',
             choices: ['PLAN', 'APPLY', 'DESTROY'],
-            description: 'Terraform Action',
-            defaultValue: 'PLAN'
+            description: 'Terraform Action'
         )
     }
 
