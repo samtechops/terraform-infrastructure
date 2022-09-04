@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "ingress" {
   to_port           = 65535
   protocol          = "tcp"
   security_group_id = aws_security_group.ec2.id
-  cidr_blocks       = [var.vpc_cidr]
+  cidr_blocks       = [data.terraform_remote_state.base.outputs.public_subnet_cidr_block, data.terraform_remote_state.base.outputs.private_subnet_cidr_block]
 
 }
 
