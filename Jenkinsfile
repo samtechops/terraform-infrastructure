@@ -62,11 +62,11 @@ pipeline {
                 
                 dir('base') {
                     echo "TFSec Base"
-                    sh "tfsec ."
+                    sh "tfsec . --no-colour"
                 }
                 dir('application') {
                     echo "TFSec Application"
-                    sh "tfsec ."
+                    sh "tfsec . --no-colour"
                 }
             }
         }
