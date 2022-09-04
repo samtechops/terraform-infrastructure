@@ -42,7 +42,6 @@ data "aws_iam_policy_document" "ec2_assume_role" {
 }
 
 data "aws_iam_policy_document" "ecr" {
-  provider      = aws.perimeter
   statement {
     sid    = "AllowECR"
     effect = "Allow"
