@@ -15,7 +15,7 @@ resource "aws_route_table" "private" {
 
   tags = merge(
     {
-      Name = "${local.csi}-private-route-table"
+      Name = "${local.component}-private-route-table"
     }, 
     local.default_tags
   )
@@ -51,7 +51,7 @@ resource "aws_route_table" "private" {
 
    tags = merge(
      {
-       Name = "${local.csi}-nat-gateway"
+       Name = "${local.component}-nat-gateway"
      }, 
      local.default_tags
    )
