@@ -18,13 +18,13 @@ pipeline {
                 // sh "git clone https://github.com/samtechops/terraform-infrastructure.git"
                 // stash includes: "terraform-infrastructure/*", name: "terraform-infrastructure"
                 checkout scm
-                }
+            }
         }
 
         stage('Create TF Remote State') {
             when {
                 expression { 
-                    return params.ENVIRONMENT == true
+                    return params.CREATE_AWS_PREREQS == true
                 }
             }
             steps {
