@@ -19,8 +19,8 @@ pipeline {
             steps {
                 // withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') {
                 echo "Creating S3 terraform remte state Bucket"
-                sh "export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-                sh "export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+                // sh "export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+                // sh "export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                 unstash "terraform-infrastructure"
                 sh "cd ./terraform-infrastructure"
                 sh "chmod +x ./scripts/create_state_bucket.sh"
@@ -32,8 +32,8 @@ pipeline {
             steps {
                 // withAWS(credentials: 'sam-jenkins-aws-creds', region: 'eu-west-1') { 
                 echo "Creating S3 terraform remte state Bucket"
-                sh "export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-                sh "export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+                // sh "export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+                // sh "export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
                 unstash "terraform-infrastructure"
                 sh "cd ./terraform-infrastructure"
                 sh "chmod +x ./scripts/create_dynamodb_terraform_lock.sh"
