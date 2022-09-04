@@ -88,7 +88,7 @@ pipeline {
                 dir('application') {
                     echo "Terraform Apply Application"
                     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
-                    sh "terraform plan -no-color"
+                    sh "terraform apply -auto-approve -no-color"
                 }
             }
         }

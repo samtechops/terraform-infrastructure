@@ -34,3 +34,13 @@ resource "aws_iam_role_policy_attachment" "cloudwatch" {
 
 
 
+## ssm Resources
+resource "aws_iam_policy" "ssm" {
+  name   = "ssm-policy"
+  policy = data.aws_iam_policy_document.ssm.json
+}
+
+resource "aws_iam_role_policy_attachment" "ssm" {
+  role       = aws_iam_role.main.name
+  policy_arn = aws_iam_policy.ssm.arn
+}
