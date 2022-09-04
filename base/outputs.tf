@@ -25,7 +25,7 @@ output "private_subnet_id" {
 output "private_subnet_cidr_block" {
   value = aws_subnet.private_subnet.cidr_block
 }
-output "acm_certificate_arn" {
-  value = aws_acm_certificate.wildcard.arn
+# output "acm_certificate_arn" {
+#   value = aws_acm_certificate.wildcard.arn
   
-}
+# }
