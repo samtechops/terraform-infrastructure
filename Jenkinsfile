@@ -2,6 +2,7 @@ pipeline {
     agent { node { label 'jenkins-slave' } }
 
     parameters {
+        booleanParam(defaultValue: false, name: 'CREATE_AWS_PREREQS', description: 'If true, the pipeline will create TF S3 remote state & DynamoDB state lock')
         booleanParam(defaultValue: false, name: 'TERRAFORM_SECURITY_CHECKS', description: 'If true, the pipeline will create run tfsec, a static analysis security scanner for your Terraform code')
         choice(
             name: 'TF_ACTION',
