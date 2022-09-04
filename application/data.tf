@@ -4,7 +4,7 @@ data "terraform_remote_state" "base" {
   backend = "s3"
   config = {
     bucket = "tf-state-${data.aws_caller_identity.current.account_id}"
-    key = "sandbox/sp/base/terraform.tfstate"
+    key = "sandbox/ps/base/terraform.tfstate"
     region = var.aws_region
   }
 }
