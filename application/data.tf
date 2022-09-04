@@ -120,8 +120,8 @@ data "aws_iam_policy_document" "ssm" {
   }
 }
 
-data "aws_route53_zone" "public" {
-  name         = "lbo-fujitsu.ninja"
-  private_zone = false
-}
+# data "aws_route53_zone" "public" {
+#   name         = "lbo-fujitsu.ninja"
+#   private_zone = false
+# }
 
