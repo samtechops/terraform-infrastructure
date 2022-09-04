@@ -68,7 +68,7 @@ resource "aws_launch_template" "go_app" {
 
 resource "aws_autoscaling_group" "go_app" {
   name                      = "${aws_launch_template.go_app.name}-${aws_launch_template.go_app.latest_version}"
-  vpc_zone_identifier       = data.terraform_remote_state.base.outputs.private_subnet_id
+  vpc_zone_identifier       = [data.terraform_remote_state.base.outputs.private_subnet_id]
   min_size                  = var.ec2_asg_minimum_size
   max_size                  = var.ec2_asg_maximum_size
   desired_capacity          = var.ec2_asg_desired_capacity
