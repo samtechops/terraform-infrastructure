@@ -62,11 +62,11 @@ pipeline {
                 
                 dir('base') {
                     echo "TFSec Base"
-                    sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
+                    // sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
                 }
                 dir('application') {
                     echo "TFSec Application"
-                    sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
+                    // sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
                 }
             }
         }
