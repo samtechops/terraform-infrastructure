@@ -59,7 +59,7 @@ pipeline {
             steps {
                 echo "Terraform Plan"
 
-                sh "cd ./base"
+                sh "cd base"
                 sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\""
                 sh "terraform plan -no-color"
             }
