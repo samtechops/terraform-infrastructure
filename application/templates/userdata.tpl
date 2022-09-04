@@ -52,8 +52,8 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 yum install -y yum-utils
-curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m) -o /bin/docker-compose
+chmod +x /bin/docker-compose
 sudo usermod -aG docker $USER
 
 systemctl daemon-reload
@@ -61,7 +61,6 @@ systemctl restart docker.service
 
 
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 009215683468.dkr.ecr.eu-west-1.amazonaws.com
-
 
 mkdir /opt/docker-compose
 
