@@ -25,7 +25,7 @@ resource "aws_autoscaling_attachment" "attach_80" {
 resource "aws_lb_target_group" "alb_80" {
   name                 = "${local.component}-80"
   port                 = 80
-  protocol             = "TCP"
+  protocol             = "HTTP"
   vpc_id               = data.terraform_remote_state.base.outputs.vpc_id
 }
 
