@@ -80,6 +80,22 @@ pipeline {
                 }
             }
         }
+
+        stage('TF Destroy') {
+            when {
+                expression { 
+                   return params.TF_ACTION == 'DESTROY'
+                }
+            }
+            steps {
+                echo "Terraform Destroy"
+                
+                dir('base') {
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                    sh "terraform destroy -auto-approve -no-color"
+                }
+            }
+        }
         
     }
 
