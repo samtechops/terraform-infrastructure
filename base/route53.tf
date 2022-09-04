@@ -20,18 +20,3 @@
 # }
 
 # resource "aws_acm_certificate" "wildcard" {
-#   domain_name       = "*.lbo-fujitsu.ninja"
-#   validation_method = "DNS"
-
-#   tags = merge(
-#     {
-#       Name = "${local.component}-public-acm-certificate"
-#     }, 
-#     local.default_tags
-#   )
-
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-
-# }
