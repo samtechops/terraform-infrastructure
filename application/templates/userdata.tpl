@@ -68,7 +68,7 @@ sudo tee /opt/docker-compose/docker-compose.yml <<- "EOF"
 version: '3.7'
 services:
   go_app:
-    image: 009215683468.dkr.ecr.eu-west-1.amazonaws.com/go-web-api:1041f82135a64fff77352ea3d1cd8b7392dfe284
+    image: 009215683468.dkr.ecr.eu-west-1.amazonaws.com/go-web-api:941e6705ee012c4af12cf0beb4b55698786b7517
     ports:
       - "80:80"
     environment:  # Environment variables
