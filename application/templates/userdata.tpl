@@ -13,6 +13,8 @@ curl -s http://169.254.169.254/latest/dynamic/instance-identity/document >metada
 export AWS_INSTANCE_ID=$(grep -oP '(?<="instanceId" : ")[^"]*(?=")' metadata.json)
 
 
+yum install -y amazon-cloudwatch-agent
+
 ### install monitoring configuration
 echo "Configuring cloudwatch agent /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
 cat <<EOF >/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json

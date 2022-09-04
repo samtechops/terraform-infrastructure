@@ -2,7 +2,7 @@ pipeline {
     agent { node { label 'jenkins-slave' } }
 
     parameters {
-        booleanParam(defaultValue: false, name: 'CREATE_AWS_PREREQS', description: 'If true, the pipeline will create TF S3 remote state & DynamoDB state lock')
+        booleanParam(defaultValue: false, name: 'TERRAFORM_SECURITY_CHECKS', description: 'If true, the pipeline will create run tfsec, a static analysis security scanner for your Terraform code')
         choice(
             name: 'TF_ACTION',
             choices: ['PLAN', 'APPLY', 'DESTROY'],
@@ -48,6 +48,25 @@ pipeline {
 
                 sh "chmod +x ./scripts/create_dynamodb_terraform_lock.sh"
                 sh "./scripts/create_dynamodb_terraform_lock.sh"
+            }
+        }
+        stage('TF Security Checks') {
+            when {
+                expression { 
+                   return params.TERRAFORM_SECURITY_CHECKS == true
+                }
+            }
+            steps {
+                echo "Terraform code Static security scanner."
+                
+                dir('base') {
+                    echo "TFSec Base"
+                    sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
+                }
+                dir('application') {
+                    echo "TFSec Application"
+                    sh "docker run --rm -it -v \"$(pwd):/src\" aquasec/tfsec /src"
+                }
             }
         }
         stage('TF Plan') {
