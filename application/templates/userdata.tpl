@@ -59,18 +59,20 @@ sudo usermod -aG docker $USER
 systemctl daemon-reload
 systemctl restart docker.service
 
+
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 009215683468.dkr.ecr.eu-west-1.amazonaws.com
+
+
 mkdir /opt/docker-compose
 
 sudo tee /opt/docker-compose/docker-compose.yml <<- "EOF"
 version: '3.7'
 services:
-  web_app:
-    image: nginx
-    # Expose the sample app's port on the host OS
+  go_app:
+    image: 009215683468.dkr.ecr.eu-west-1.amazonaws.com/go-web-api:1041f82135a64fff77352ea3d1cd8b7392dfe284
     ports:
       - "80:80"
     environment:  # Environment variables
-      - NGINX_PORT=80 
       - LOG_LEVEL=info
     logging:
       driver: awslogs
