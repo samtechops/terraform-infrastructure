@@ -46,19 +46,32 @@ EOF
 systemctl enable amazon-cloudwatch-agent
 systemctl restart amazon-cloudwatch-agent
 
+### Installing Docker
+sudo yum install -y docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+yum install -y yum-utils
+curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+sudo usermod -aG docker $USER
+
 systemctl daemon-reload
 systemctl restart docker.service
+
+mkdir /opt/docker-compose
 
 sudo tee /opt/docker-compose/docker-compose.yml <<- "EOF"
 version: '3.7'
 services:
-  web:
+  web_app:
     image: nginx
-	ports:
-	  - "8080:80"	
+    # Expose the sample app's port on the host OS
+    ports:
+      - "80:80"
     environment:  # Environment variables
+      - NGINX_PORT=80 
       - LOG_LEVEL=info
-	  - NGINX_PORT=80
     logging:
       driver: awslogs
       options:
@@ -66,6 +79,7 @@ services:
         awslogs-group: /aws/services/go-app
         awslogs-stream: docker-logs/go-app
 EOF
+
 
 ## Docker compose up
 docker-compose -f /opt/docker-compose/docker-compose.yml --compatibility up -d \

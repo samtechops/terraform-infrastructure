@@ -29,11 +29,8 @@ resource "aws_launch_template" "go_app" {
     security_groups             = [aws_security_group.ec2.id]
   }
 
-  # user_data = base64encode(templatefile("templates/userdata.tpl", {
-  #   instance_name              = local.component,
-  #   vcpe_dns_name              = aws_vpc_endpoint.proxy.dns_entry.0.dns_name
-
-  # }))
+  user_data = base64encode(templatefile("templates/userdata.tpl", {
+  }))
 
 
   tag_specifications {
