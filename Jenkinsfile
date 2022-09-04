@@ -30,7 +30,9 @@ pipeline {
             steps {
                 echo "Creating S3 Terraform Remote State Bucket"
                 // unstash "terraform-infrastructure"
-                sh "cd ./terraform-infrastructure"
+                // sh "cd ./terraform-infrastructure"
+                sh "pwd"
+                sh "ls -la"
                 sh "chmod +x ./scripts/create_state_bucket.sh"
                 sh "./scripts/create_state_bucket.sh"
             }
