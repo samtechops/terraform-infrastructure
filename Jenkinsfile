@@ -3,6 +3,12 @@ pipeline {
 
     parameters {
         booleanParam(defaultValue: false, name: 'CREATE_AWS_PREREQS', description: 'If true, the pipeline will create TF S3 remote state & DynamoDB state lock')
+        choice(
+            name: 'TF_ACTION',
+            choices: ['PLAN', 'APPLY', 'DESTROY'],
+            description: 'Terraform Action',
+            defaultValue: 'PLAN'
+        )
     }
 
     environment {
@@ -15,8 +21,6 @@ pipeline {
         // your pipeline code here
         stage('Checkout') {
             steps {
-                // sh "git clone https://github.com/samtechops/terraform-infrastructure.git"
-                // stash includes: "terraform-infrastructure/*", name: "terraform-infrastructure"
                 checkout scm
             }
         }
@@ -29,10 +33,7 @@ pipeline {
             }
             steps {
                 echo "Creating S3 Terraform Remote State Bucket"
-                // unstash "terraform-infrastructure"
-                // sh "cd ./terraform-infrastructure"
-                sh "pwd"
-                sh "ls -la"
+
                 sh "chmod +x ./scripts/create_state_bucket.sh"
                 sh "./scripts/create_state_bucket.sh"
             }
@@ -45,10 +46,23 @@ pipeline {
             }
             steps {
                 echo "Creating DynamoDB Terraform Lock"
-                // unstash "terraform-infrastructure"
-                sh "cd ./terraform-infrastructure"
+
                 sh "chmod +x ./scripts/create_dynamodb_terraform_lock.sh"
                 sh "./scripts/create_dynamodb_terraform_lock.sh"
+            }
+        }
+        stage('TF Plan') {
+            when {
+                expression { 
+                   return params.TF_ACTION == 'PLAN'
+                }
+            }
+            steps {
+                echo "Terraform Plan"
+
+                sh "cd ./base"
+                sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\""
+                sh "terraform plan -no-color"
             }
         }
 
