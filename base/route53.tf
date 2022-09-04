@@ -35,13 +35,3 @@
 #   }
 
 # }
-
-
-# resource "aws_acm_certificate_validation" "wildcard_certification" {
-#   certificate_arn = aws_acm_certificate.wildcard.arn
-
-#   depends_on = [
-#     aws_acm_certificate.wildcard
-#   ]
-
-# }
