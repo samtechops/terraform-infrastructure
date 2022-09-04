@@ -31,11 +31,11 @@ resource "aws_lb_target_group" "alb_80" {
 
 resource "aws_lb_listener" "alb_8080" {
   load_balancer_arn = aws_lb.alb.arn
-  port              = 443
-  protocol          = "HTTPS"
+  port              = 80
+  protocol          = "HTTP"
   
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = data.terraform_remote_state.base.outputs.acm_certificate_arn
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = data.terraform_remote_state.base.outputs.acm_certificate_arn
 
   default_action {
     type             = "forward"
