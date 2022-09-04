@@ -60,6 +60,12 @@ pipeline {
                 echo "Terraform Plan"
                 
                 dir('base') {
+                    echo "Terraform Plan Base"
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                    sh "terraform plan -no-color"
+                }
+                dir('application') {
+                    echo "Terraform Plan Application"
                     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
                     sh "terraform plan -no-color"
                 }
@@ -75,8 +81,14 @@ pipeline {
                 echo "Terraform Apply"
                 
                 dir('base') {
+                    echo "Terraform Apply Base"
                     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
                     sh "terraform apply -auto-approve -no-color"
+                }
+                dir('application') {
+                    echo "Terraform Apply Application"
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                    sh "terraform plan -no-color"
                 }
             }
         }
@@ -89,8 +101,14 @@ pipeline {
             }
             steps {
                 echo "Terraform Destroy"
-                
+
+                dir('application') {
+                    echo "Terraform Destroy Application"
+                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                    sh "terraform plan -no-color"
+                }
                 dir('base') {
+                    echo "Terraform Destroy Base"
                     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
                     sh "terraform destroy -auto-approve -no-color"
                 }
