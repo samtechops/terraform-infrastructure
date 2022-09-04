@@ -15,27 +15,27 @@ resource "aws_lb" "alb" {
 }
 
 
-resource "aws_autoscaling_attachment" "80" {
+resource "aws_autoscaling_attachment" "attach_80" {
   autoscaling_group_name = aws_autoscaling_group.go_app.id
-  lb_target_group_arn   = aws_lb_target_group.80.arn
+  lb_target_group_arn   = aws_lb_target_group.alb_80.arn
 }
 
 
 
-resource "aws_lb_target_group" "80" {
+resource "aws_lb_target_group" "alb_80" {
   name                 = "${local.component}-80"
   port                 = 80
   protocol             = "TCP"
   vpc_id               = aws_vpc.main.id
 }
 
-resource "aws_lb_listener" "8080" {
+resource "aws_lb_listener" "alb_8080" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 8080
   protocol          = "TCP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.80.arn
+    target_group_arn = aws_lb_target_group.alb_80.arn
   }
 }
