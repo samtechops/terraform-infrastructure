@@ -127,11 +127,11 @@ pipeline {
                     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
                     sh "terraform plan -no-color"
                 }
-                dir('base') {
-                    echo "Terraform Destroy Base"
-                    sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
-                    sh "terraform destroy -auto-approve -no-color"
-                }
+                // dir('base') {
+                //     echo "Terraform Destroy Base"
+                //     sh "terraform init -reconfigure -backend-config=\"bucket=$TF_S3_STATE_BUCKET\" -backend-config=\"region=$AWS_DEFAULT_REGION\" -no-color"
+                //     sh "terraform destroy -auto-approve -no-color"
+                // }
             }
         }
         
