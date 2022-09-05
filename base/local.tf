@@ -1,5 +1,5 @@
 locals {
-  component      = "ps-base"
+  component      = "ps-base-1"
 
   default_tags = {
     Environment = var.environment
