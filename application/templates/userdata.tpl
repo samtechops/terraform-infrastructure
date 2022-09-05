@@ -12,11 +12,13 @@ echo "Setting variables from AWS"
 curl -s http://169.254.169.254/latest/dynamic/instance-identity/document >metadata.json
 export AWS_INSTANCE_ID=$(grep -oP '(?<="instanceId" : ")[^"]*(?=")' metadata.json)
 
-
-yum install -y amazon-cloudwatch-agent
+yum install -y yum-utils
+sudo yum install -y amazon-cloudwatch-agent
+systemctl enable amazon-cloudwatch-agent
 
 ### install monitoring configuration
 echo "Configuring cloudwatch agent /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
+
 cat <<EOF >/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 {
 	"agent": {
@@ -45,7 +47,6 @@ cat <<EOF >/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 EOF
 
 # ensure cloudwatch is enabled and restarted
-systemctl enable amazon-cloudwatch-agent
 systemctl restart amazon-cloudwatch-agent
 
 ### Installing Docker
@@ -53,7 +54,7 @@ sudo yum install -y docker
 sudo systemctl enable docker
 sudo systemctl start docker
 
-yum install -y yum-utils
+
 curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m) -o /bin/docker-compose
 chmod +x /bin/docker-compose
 sudo usermod -aG docker $USER
