@@ -39,5 +39,5 @@ variable "ec2_asg_desired_capacity" {
 }
 
 variable "image_tag" {
-  default = "ecc0040ebf649a0255dffe46d713a1ade00fc1df"
+  default = "3a4e2fc97508b66d96979614000b32e02d9f08bc"
 }
