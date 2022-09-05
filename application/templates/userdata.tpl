@@ -66,11 +66,11 @@ aws ecr get-login-password --region eu-west-1 | docker login --username AWS --pa
 
 mkdir /opt/docker-compose
 
-sudo tee /opt/docker-compose/docker-compose.yml <<- "EOF"
+cat <<EOF >/opt/docker-compose/docker-compose.yml
 version: '3.7'
 services:
   go_app:
-    image: 009215683468.dkr.ecr.eu-west-1.amazonaws.com/go-web-api:044c2dc04ba1829e042a944d81123867a91081f2
+    image: 009215683468.dkr.ecr.eu-west-1.amazonaws.com/go-web-api:${IMAGE_TAG}
     ports:
       - "80:80"
     environment:  # Environment variables

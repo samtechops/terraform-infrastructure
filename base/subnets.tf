@@ -14,9 +14,7 @@ resource "aws_subnet" "public_subnet" {
     local.default_tags
   )
 }
-###
-## Public Subnets
-###
+
 resource "aws_subnet" "public_subnet_2" {
   availability_zone = "eu-west-1b"
   cidr_block = "10.0.2.0/24"
@@ -31,7 +29,7 @@ resource "aws_subnet" "public_subnet_2" {
 }
 
 ###
-## Public Subnets
+## private Subnet
 ###
 resource "aws_subnet" "private_subnet" {
   availability_zone = var.availability_zone

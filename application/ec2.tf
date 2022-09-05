@@ -30,6 +30,7 @@ resource "aws_launch_template" "go_app" {
   }
 
   user_data = base64encode(templatefile("templates/userdata.tpl", {
+    IMAGE_TAG = var.image_tag
   }))
 
 
@@ -57,6 +58,9 @@ resource "aws_launch_template" "go_app" {
 
 }
 
+resource "aws_ebs_encryption_by_default" "enabled" {
+     enabled = true
+}
 
 ############## ASG ##################################
 

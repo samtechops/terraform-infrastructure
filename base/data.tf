@@ -11,9 +11,3 @@ data "aws_iam_policy_document" "s3_vpce_source" {
 
   }
 }  
-
-# data "aws_route53_zone" "public" {
-#   name         = "lbo-fujitsu.ninja"
-#   private_zone = false
-# }
-

@@ -1,4 +1,3 @@
-# Endpoint NLB
 resource "aws_lb" "alb" {
   name               = "${local.component}-alb"
   load_balancer_type = "application"
@@ -27,6 +26,12 @@ resource "aws_lb_target_group" "alb_80" {
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = data.terraform_remote_state.base.outputs.vpc_id
+
+  health_check {
+    protocol = "HTTP"
+    interval = 10
+  }
+
 }
 
 resource "aws_lb_listener" "alb_8080" {
@@ -34,9 +39,6 @@ resource "aws_lb_listener" "alb_8080" {
   port              = 80
   protocol          = "HTTP"
   
-#   ssl_policy        = "ELBSecurityPolicy-2016-08"
-#   certificate_arn   = data.terraform_remote_state.base.outputs.acm_certificate_arn
-
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_80.arn

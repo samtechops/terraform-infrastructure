@@ -37,3 +37,7 @@ variable "ec2_asg_maximum_size" {
 variable "ec2_asg_desired_capacity" {
     default = "1"   
 }
+
+variable "image_tag" {
+  default = "044c2dc04ba1829e042a944d81123867a91081f2"
+}
